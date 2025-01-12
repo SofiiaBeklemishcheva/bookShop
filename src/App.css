@@ -1,0 +1,40 @@
+:root {
+  --white: #E1DECC;
+  --black: #010101;
+  --red: #E70F0E;
+  --darkRed: #CA1211;
+  --gray: #474145;
+  --lightGray: #928a92;
+  --fontSizeDeafault: 18px;
+  --fontSize20: 20;
+  --fontSizeSmall: 14px;
+  --fontSizeVerySmall: 10px;
+  --fontSizeHeader: 24px;
+  --fontWeightBold: 700;
+  --fontWeightNormal: 400;
+  --fontFamily: Inknut Antiqua;
+}
+* {
+  box-sizing: border-box;
+  color: var(--black);
+}
+body {
+  width: 100%;
+  margin: 0;
+  background-color: var(--white);
+  font-size: var(--fontSizeDeafault);
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+h1 {
+  color: var(--black);
+  display: flex;
+  justify-content: center;
+  font-size: var(--fontSizeHeader);
+}
+button{
+  all: unset;
+  cursor: pointer;
+}
