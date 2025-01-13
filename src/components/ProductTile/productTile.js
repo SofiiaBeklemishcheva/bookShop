@@ -13,7 +13,6 @@ const ProductTile = ({
                          onAddToCart,
                          rate,
                      }) => {
-    // Funkcja wywoływana po kliknięciu przycisku dodania do koszyka
     const handleAddToCart = (e) => {
         e.preventDefault();
         const productData = {
@@ -26,7 +25,7 @@ const ProductTile = ({
             product_stock: stock,
             product_rate: rate,
         };
-        onAddToCart(productData); // Wywołanie funkcji przekazanej jako props
+        onAddToCart(productData);
     };
 
     return (
@@ -36,8 +35,8 @@ const ProductTile = ({
                 src={img}
                 alt={label}
                 onError={(e) => {
-                    e.target.onerror = null; // Zapobieganie nieskończonemu wywołaniu `onError`
-                    e.target.src = placeholderImage; // Ustawienie obrazu zastępczego
+                    e.target.onerror = null;
+                    e.target.src = placeholderImage;
                 }}
             />
             <p className={styles.productTileLabel}>{label}</p>
@@ -45,9 +44,7 @@ const ProductTile = ({
             <p className={styles.productTileLabel}>Ocena użytkowników: {rate}</p>
             <p className={styles.productTilePrice}>{price} zł</p>
 
-            {/* Formularz wysyła dane produktu */}
             <form onSubmit={handleAddToCart}>
-                {/* Ukryte pola do przesyłania danych */}
                 <input type="hidden" name="product_id" value={id}/>
                 <input type="hidden" name="product_label" value={label}/>
                 <input type="hidden" name="product_author" value={authorName}/>
@@ -57,7 +54,6 @@ const ProductTile = ({
                 <input type="hidden" name="product_stock" value={stock}/>
                 <input type="hidden" name="product_rate" value={rate}/>
 
-                {/* Przycisk "Dodaj do koszyka" */}
                 <button type="submit" className={styles.addToCartButton}>
                     <img className={styles.addToCartButtonImg} src={"../../assets/icons/cartWhite.png"}/>
                     Dodaj do koszyka

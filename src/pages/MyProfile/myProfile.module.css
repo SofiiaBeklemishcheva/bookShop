@@ -1,0 +1,33 @@
+.profileContainer {
+    padding: 20px;
+}
+
+.userDetails {
+    margin-bottom: 20px;
+}
+
+.userDetails p {
+    font-size: 1.1rem;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+h3 {
+    margin-top: 30px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+
+li p {
+    margin: 5px 0;
+}

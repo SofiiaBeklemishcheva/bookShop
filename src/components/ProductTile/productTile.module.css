@@ -1,6 +1,6 @@
 .productTileContainer{
     width: 246px;
-    height: 420px;
+    height: 430px;
     display: flex;
     padding: 10px;
     align-items: center;
@@ -14,6 +14,9 @@
     height: 215px;
 }
 .productTileLabel{
+    height: 36px;
+    text-align: center;
+    font-size: var(--fontSizeSmall);
     margin: 5px;
 }
 .productTilePrice{

@@ -1,0 +1,6 @@
+.cartContainer{
+    width: 365px;
+    height: 100vh;
+    background-color: var(--white);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+}

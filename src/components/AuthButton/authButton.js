@@ -1,33 +1,37 @@
 import React, { useState } from "react";
 import styles from "./authButton.module.css";
-import AuthPopup from "../AuthPopUp/authPopUp"; // Importujemy popup
+import AuthPopup from "../AuthPopUp/authPopUp";
 
 const AuthButton = ({ isLoggedIn, setIsLoggedIn }) => {
     const [isPopupVisible, setIsPopupVisible] = useState(false);
 
     const handleButtonClick = () => {
         if (isLoggedIn) {
-            window.location.href = "/myProfile";
+            window.location.href = "/home";
         } else {
-            // Pokaż popup
             setIsPopupVisible(true);
         }
     };
 
     return (
         <>
-            {/* Przycisk */}
             <button onClick={handleButtonClick} className={styles.loginButtonContainer}>
                 <img
-                    src={isLoggedIn ? "../assets/icons/userLogedIn.png" : "../assets/icons/userNotLogedIn.png"} // Zmieniamy obrazek
+                    src={isLoggedIn ? "../assets/icons/userLogedIn.png" : "../assets/icons/userNotLogedIn.png"}
                     alt={isLoggedIn ? "Go to profile" : "Log in"}
                     className={styles.loginImg}
                 />
             </button>
 
-            {/* Popup */}
             {isPopupVisible && (
-                <AuthPopup onClose={() => setIsPopupVisible(false)} setIsLoggedIn={setIsLoggedIn} />
+                <AuthPopup
+                    onClose={() => setIsPopupVisible(false)}
+                    handleLoginSuccess={(user) => {
+                        setIsLoggedIn(true);
+                        localStorage.setItem("user", JSON.stringify(user));
+                        setIsPopupVisible(false);
+                    }}
+                />
             )}
         </>
     );

@@ -1,9 +1,41 @@
 .pageContentContainer{
     display: flex;
     justify-content: center;
+    flex-direction: column;
 }
 .contentContainer{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+.cartContainer {
+}
+.cartButtonContainer{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.pageOrganization{
+    display: flex;
+}
+.cartButton {
+    width: 30px;
+    height: 30px;
+    top: 10px;
+    right: 10px;
+    background-color: var(--white);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+.layoutLogOutImg{
+    width: 30px;
+    height: 30px;
+}
+.cartButton:hover {
+    background-color: var(--darkRed);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

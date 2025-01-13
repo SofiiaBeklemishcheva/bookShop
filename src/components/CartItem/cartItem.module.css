@@ -1,0 +1,35 @@
+.cartItemContainer{
+
+}
+.headPartContainer{
+
+}
+.headPartContentContainer{
+    display: flex;
+    justify-content: space-between;
+}
+.headRightPartContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.bookImg{
+    width: 195px;
+    height: 160px;
+}
+.priceDetailsContainer{
+
+}
+.label{
+    font-size: var(--fontSizeSmall);
+}
+.deleteButton{
+
+}
+.layoutLogOutImg{
+    width: 30px;
+    height: 30px;
+}
+.productDetailsDescription{
+
+}
