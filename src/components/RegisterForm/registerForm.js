@@ -1,91 +1,111 @@
 import React, { useState } from "react";
-import styles from "./home.module.css";
-import ProductTile from "../../components/ProductTile/productTile";
-import Cart from "../../components/Cart/cart";
-import useFetchProducts from "../../hooks/useFetchProducts";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import styles from "./registerForm.module.css";
 
-const Home = () => {
-    const [cartItems, setCartItems] = useState([]);
-    const [isCartVisible, setIsCartVisible] = useState(false);
-    const { userData, setIsLoggedIn, setUserData } = useOutletContext(); // Dostęp do userData
-    console.log("UserData in Home:", userData);  // Zaloguj dane użytkownika
+const RegisterForm = ({ handleLoginSuccess, onClose, setIsLoggedIn, setUserData }) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null);
 
-    const { products, loading, error } = useFetchProducts();
-    console.log("Home:", userData);
+    const handleRegister = async (e) => {
+        e.preventDefault();
 
-    const toggleCartVisibility = () => {
-        setIsCartVisible((prev) => !prev);
-    };
+        // Sprawdzenie, czy hasła pasują
+        if (password !== confirmPassword) {
+            setError("Passwords do not match!");
+            return;
+        }
 
-    const addToCart = (book) => {
-        setCartItems((prevItems) => {
-            const existingItem = prevItems.find((item) => item.ID === book.ID);
-            if (existingItem) {
-                return prevItems.map((item) =>
-                    item.ID === book.ID
-                        ? { ...item, amount: item.amount + 1 }
-                        : item
-                );
+        // Sprawdzenie, czy email i hasło są wprowadzone
+        if (!email || !password) {
+            setError("Email and password are required!");
+            return;
+        }
+
+        try {
+            const response = await fetch("http://localhost:PORT/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            return [...prevItems, { ...book, amount: 1 }];
-        });
+
+            const text = await response.text();
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch (error) {
+                throw new Error("Invalid JSON response");
+            }
+
+            if (data.status === "success" && data.user) {
+                // Rejestracja zakończona sukcesem, automatyczne logowanie
+                handleLoginSuccess(data.user);
+                localStorage.setItem("user", JSON.stringify(data.user));
+                setUserData(data.user);
+                setIsLoggedIn(true);
+                setSuccessMessage("Registration successful! You are now logged in.");
+                onClose(); // Zamknięcie popupu po udanej rejestracji
+            } else {
+                setError(data.message || "Registration failed");
+            }
+        } catch (error) {
+            setError("An error occurred while registering");
+        }
     };
-
-    const removeFromCart = (id) => {
-        setCartItems((prevItems) => prevItems.filter((item) => item.ID !== id));
-    };
-
-    const updateCart = (updatedCartItems) => {
-        setCartItems(updatedCartItems);
-    };
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
 
     return (
-        <div className={styles.pageContentContainer}>
-            <div className={styles.cartButtonContainer}>
-                <button onClick={toggleCartVisibility} className={styles.cartButton}>
-                    <img className={styles.layoutLogOutImg} src="/assets/icons/cart.png" alt="Koszyk" />
-                </button>
+        <form onSubmit={handleRegister} className={styles.formContainer}>
+            <h3>Register</h3>
+
+            {error && <div className={styles.error}>{error}</div>}
+            {successMessage && <div className={styles.success}>{successMessage}</div>}
+
+            <div>
+                <label>Email:</label>
+                <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className={styles.formInput}
+                    placeholder="Enter your email"
+                />
             </div>
 
-            <div className={styles.pageOrganization}>
-                <div className={styles.contentContainer}>
-                    {products.map((product) => (
-                        <ProductTile
-                            key={product.ID}
-                            id={product.ID}
-                            label={product.label}
-                            authorName={product.authorName}
-                            price={product.price}
-                            img={product.img}
-                            genre={product.genre}
-                            rate={product.rate}
-                            onAddToCart={() => addToCart(product)}
-                        />
-                    ))}
-                </div>
-
-                {isCartVisible && (
-                    <div className={styles.cartContainer}>
-                        <Cart
-                            cartItems={cartItems}
-                            onUpdateCart={updateCart}
-                            onRemoveItem={removeFromCart}
-                            userData={userData}
-                        />
-                    </div>
-                )}
+            <div>
+                <label>Password:</label>
+                <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className={styles.formInput}
+                    placeholder="Enter your password"
+                />
             </div>
-        </div>
+
+            <div>
+                <label>Confirm Password:</label>
+                <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                    className={styles.formInput}
+                    placeholder="Confirm your password"
+                />
+            </div>
+
+            <button type="submit" className={styles.submitButton}>
+                Register
+            </button>
+        </form>
     );
 };
 
-export default Home;
+export default RegisterForm;
