@@ -1,0 +1,16 @@
+{
+  "name": "vendor_name/ProductService",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Lenovo 15IHU682K100Q",
+      "email": "beklemishchevasofiya@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "ext-pdo": "*"
+  }
+}

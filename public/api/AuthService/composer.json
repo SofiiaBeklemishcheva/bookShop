@@ -1,0 +1,15 @@
+{
+  "name": "vendor_name/AuthService",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Lenovo 15IHU682K100Q",
+      "email": "beklemishchevasofiya@gmail.com"
+    }
+  ],
+  "require": {
+    "firebase/php-jwt": "^6.0"
+  }
+}

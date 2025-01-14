@@ -1,14 +1,7 @@
 <?php
 
-$servername = "localhost";
-$database = "book_shop";
-$username = "root";
-$password = "root";
-
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo json_encode(["status" => "error", "message" => "AuthService: Connection failed: " . $e->getMessage()]);
-    exit;
-}
+return [
+    'jwt_secret' => 'your_secret_key_here',
+    'jwt_issuer' => 'your-app-name',
+    'jwt_expiration_time' => 3600
+];
